@@ -14,12 +14,12 @@ import com.google.android.material.button.MaterialButton;
 
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class MainActivity extends AppCompatActivity{
     private static final String TAG = "main activity";
     //first layout
     private EditText main_EDT_first_number;
     private EditText main_EDT_second_number;
-    private Spinner main_CMB_func_opt;
+    private EditText main_EDT_func_opt;
     private MaterialButton main_BTN_calc;
 
     //second layout
@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private EditText main_EDT_id;
 
     private HashMap<String, Integer> calcMap = new HashMap<>();
-    private String[] funcOpt = {"x", "%", "+", "-"};
 
 
     @Override
@@ -49,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private void setClickListeners() {
         main_EDT_first_number.setOnClickListener(e -> handleNumberInput(1));
         main_EDT_second_number.setOnClickListener(e -> handleNumberInput(2));
-        main_CMB_func_opt.setOnClickListener(e -> handleFuncInput());
+        main_EDT_func_opt.setOnClickListener(e -> handleFuncInput());
         main_BTN_calc.setOnClickListener(e -> handleCalcBtn());
     }
 
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private void handleFuncInput() {
         try{
-            funcStr = main_CMB_func_opt.get
+
         }catch (Exception e){
             Log.e(TAG ,"failed to parse string to int", e.getCause());
             return;
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private void setViews() {
         main_EDT_first_number = findViewById(R.id.main_EDT_first_number);
         main_EDT_second_number = findViewById(R.id.main_EDT_second_number);
-        main_CMB_func_opt = findViewById(R.id.main_CMB_func_opt);
+        main_EDT_func_opt = findViewById(R.id.main_CMB_func_opt);
         main_BTN_calc = findViewById(R.id.main_BTN_calc);
         main_TXT_first_number = findViewById(R.id.main_TXT_first_number);
         main_TXT_function = findViewById(R.id.main_TXT_function);
@@ -104,4 +103,5 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         main_EDT_name = findViewById(R.id.main_EDT_name);
         main_EDT_id = findViewById(R.id.main_EDT_id);
     }
+
 }
