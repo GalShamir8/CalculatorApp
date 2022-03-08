@@ -28,6 +28,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 >
+                <!-- TODO add input type -->
                 <EditText
                     android:id="@+id/main_EDT_first_number"
                     android:layout_width="wrap_content"
