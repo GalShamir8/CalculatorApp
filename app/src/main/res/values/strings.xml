@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">CalculatorApp</string>
+    <string name="first_number">first number</string>
+    <string name="second_number">second number</string>
+    <string name="equal">=</string>
+    <string name="full_name">full name...</string>
+    <string name="id">ID...</string>
+</resources>
