@@ -15,7 +15,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:padding="60dp"
+            android:padding="40dp"
             android:layout_gravity="center"
             android:background="#8BC34A"
             android:layout_margin="30dp"
@@ -25,25 +25,29 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:orientation="horizontal"
+                android:layout_weight="1"
                 >
-                <!-- TODO add input type -->
                 <EditText
                     android:id="@+id/main_EDT_first_number"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:inputType="number"
                     android:hint="@string/first_number"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:textSize="15sp"
                     />
                 <EditText
                     android:id="@+id/main_EDT_second_number"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="@string/second_number"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:inputType="number"
                     android:textSize="15sp"
                     />
@@ -59,6 +63,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:hint="@string/enter_function_option"
                     android:textSize="15sp"
                     android:inputType="text"
@@ -79,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:background="@color/white"
             >
             <TextView
@@ -105,7 +111,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:background="#00BCD4"
             >
         <TextView
@@ -119,14 +125,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.2"
+            android:layout_weight="0.3"
             android:orientation="horizontal"
-            android:background="@color/black"
+            android:background="@color/white"
             >
             <EditText
                 android:id="@+id/main_EDT_name"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="15sp"
                 android:textStyle="bold"
