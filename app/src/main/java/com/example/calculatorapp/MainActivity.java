@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity{
@@ -34,7 +36,8 @@ public class MainActivity extends AppCompatActivity{
     private EditText main_EDT_name;
     private EditText main_EDT_id;
 
-    private HashMap<String, Integer> calcMap = new HashMap<>();
+    private HashMap<String, String> calcMap = new HashMap<>();
+    private ArrayList<String> validFuncInputs= new ArrayList<>(Arrays.asList("+", "x", "%", "-"));
 
 
     @Override
@@ -46,47 +49,92 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void setClickListeners() {
-        main_EDT_first_number.setOnClickListener(e -> handleNumberInput(1));
-        main_EDT_second_number.setOnClickListener(e -> handleNumberInput(2));
-        main_EDT_func_opt.setOnClickListener(e -> handleFuncInput());
         main_BTN_calc.setOnClickListener(e -> handleCalcBtn());
     }
 
     private void handleCalcBtn() {
+        if(validate()){
+            handleNumberInput(1);
+            handleNumberInput(2);
+            handleFuncInput();
+            String firstVal = calcMap.get("first");
+            String secondVal = calcMap.get("second");
+            String func = calcMap.get("func");
+            String result = calcResult(firstVal, secondVal, func);
+            main_TXT_first_number.setText(firstVal);
+            main_TXT_second_number.setText(secondVal);
+            main_TXT_function.setText(func);
+            main_TXT_result.setText(result);
+        }else{
+            Log.i(TAG, "input required");
+        }
+    }
+
+    private String calcResult(String firstVal, String secondVal, String func) {
+        String result = "";
+        double res = 0;
+        try{
+            int first = Integer.parseInt(firstVal);
+            int second = Integer.parseInt(secondVal);
+            switch (func){
+                case "+":
+                    res = first + second;
+                    break;
+
+                case "-":
+                    res = first - second;
+                    break;
+
+                case "x":
+                    res = first * second;
+                    break;
+
+                case "%":
+                        if(second != 0){
+                            res = (double)first/second;
+                        }
+                    break;
+            }
+            result = "" + res;
+        }catch (NumberFormatException e){
+            Log.e(TAG, "failed to parse string to int", e.getCause());
+            return "";
+        }
+        return result;
+    }
+
+    private boolean validate() {
+        return calcMap.get("first") != null &&
+                calcMap.get("second") != null &&
+                calcMap.get("func") != null;
     }
 
     private void handleFuncInput() {
         try{
+            String funcInput = main_EDT_func_opt.getText().toString();
+            if(validFuncInputs.contains(funcInput)){
+                calcMap.put("func", funcInput);
+            }
 
         }catch (Exception e){
             Log.e(TAG ,"failed to parse string to int", e.getCause());
-            return;
         }
     }
 
     private void handleNumberInput(int index) {
         String numStr = "";
-        int value = 0 ;
         switch (index){
             case 1:
                 numStr = main_EDT_first_number.getText().toString();
-                try {
-                    value = Integer.parseInt(numStr);
-                }catch(Exception e){
-                    Log.e(TAG ,"failed to parse string to int", e.getCause());
-                    return;
+                if(!numStr.isEmpty()) {
+                    calcMap.put("first", numStr);
                 }
-                calcMap.put("first", value);
                 break;
             case 2:
                 numStr = main_EDT_second_number.getText().toString();
-                try {
-                    value = Integer.parseInt(numStr);
-                }catch(Exception e){
-                    Log.e(TAG ,"failed to parse string to int", e.getCause());
-                    return;
+                if(!numStr.isEmpty()) {
+                    calcMap.put("second", numStr);
                 }
-                calcMap.put("second", value);
                 break;
         }
     }
