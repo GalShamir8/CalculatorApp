@@ -4,11 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
+import android.view.Gravity;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 
@@ -32,10 +31,6 @@ public class MainActivity extends AppCompatActivity{
     //third layout
     private TextView main_TXT_result;
 
-    //forth layout
-    private EditText main_EDT_name;
-    private EditText main_EDT_id;
-
     private HashMap<String, String> calcMap = new HashMap<>();
     private ArrayList<String> validFuncInputs= new ArrayList<>(Arrays.asList("+", "x", "%", "-"));
 
@@ -53,10 +48,12 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void handleCalcBtn() {
+        handleFuncInput();
+        handleNumberInput(1);
+        handleNumberInput(2);
         if(validate()){
             handleNumberInput(1);
             handleNumberInput(2);
-            handleFuncInput();
             String firstVal = calcMap.get("first");
             String secondVal = calcMap.get("second");
             String func = calcMap.get("func");
@@ -95,6 +92,9 @@ public class MainActivity extends AppCompatActivity{
                         }
                     break;
             }
+            if(res % 10 == 0){
+                res = (int)res;
+            }
             result = "" + res;
         }catch (NumberFormatException e){
             Log.e(TAG, "failed to parse string to int", e.getCause());
@@ -104,9 +104,19 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private boolean validate() {
-        return calcMap.get("first") != null &&
+        String firstInput = main_EDT_first_number.getText().toString();
+        String secondInput = main_EDT_second_number.getText().toString();
+        String funcInput = main_EDT_func_opt.getText().toString();
+
+        boolean inputFlag = !firstInput.isEmpty() &&
+                !secondInput.isEmpty() &&
+                !funcInput.isEmpty();
+
+        boolean hashMapFlag = calcMap.get("first") != null &&
                 calcMap.get("second") != null &&
                 calcMap.get("func") != null;
+
+        return inputFlag && hashMapFlag;
     }
 
     private void handleFuncInput() {
@@ -148,8 +158,6 @@ public class MainActivity extends AppCompatActivity{
         main_TXT_function = findViewById(R.id.main_TXT_function);
         main_TXT_second_number = findViewById(R.id.main_TXT_second_number);
         main_TXT_result = findViewById(R.id.main_TXT_result);
-        main_EDT_name = findViewById(R.id.main_EDT_name);
-        main_EDT_id = findViewById(R.id.main_EDT_id);
     }
 
 }
