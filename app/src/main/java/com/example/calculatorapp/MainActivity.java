@@ -14,6 +14,7 @@ import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity{
     private static final String TAG = "main activity";
@@ -135,6 +136,15 @@ public class MainActivity extends AppCompatActivity{
             String funcInput = main_EDT_func_opt.getText().toString();
             if(validFuncInputs.contains(funcInput)){
                 calcMap.put("func", funcInput);
+            }
+            else{
+                StringBuilder sb_msg = new StringBuilder("function must be one of ");
+                for(String value: validFuncInputs){
+                    sb_msg.append(value);
+                    sb_msg.append(", ");
+                }
+                sb_msg.append(" values");
+                toastMessage(sb_msg.toString());
             }
 
         }catch (Exception e){
