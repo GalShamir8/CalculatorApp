@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity{
     private void setViews() {
         main_EDT_first_number = findViewById(R.id.main_EDT_first_number);
         main_EDT_second_number = findViewById(R.id.main_EDT_second_number);
-        main_EDT_func_opt = findViewById(R.id.main_CMB_func_opt);
+        main_EDT_func_opt = findViewById(R.id.main_EDT_func_opt);
         main_BTN_calc = findViewById(R.id.main_BTN_calc);
         main_TXT_first_number = findViewById(R.id.main_TXT_first_number);
         main_TXT_function = findViewById(R.id.main_TXT_function);
