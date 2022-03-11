@@ -64,7 +64,15 @@ public class MainActivity extends AppCompatActivity{
             main_TXT_result.setText(result);
         }else{
             Log.i(TAG, "input required");
+            toastMessage("input required");
         }
+    }
+
+    private void toastMessage(String msg) {
+        Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL|Gravity.TOP,
+                0, 0);
+        toast.show();
     }
 
     private String calcResult(String firstVal, String secondVal, String func) {
@@ -89,6 +97,9 @@ public class MainActivity extends AppCompatActivity{
                 case "%":
                         if(second != 0){
                             res = (double)first/second;
+                        }
+                        else{
+                            toastMessage("Can not divide by zero!");
                         }
                     break;
             }
