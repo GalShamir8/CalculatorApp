@@ -6,4 +6,10 @@
     <string name="full_name">full name...</string>
     <string name="id">ID...</string>
     <string name="enter_function_option">enter function option</string>
+    <string-array name="funcOptions">
+        <item>+</item>
+        <item>-</item>
+        <item>x</item>
+        <item>%</item>
+    </string-array>
 </resources>

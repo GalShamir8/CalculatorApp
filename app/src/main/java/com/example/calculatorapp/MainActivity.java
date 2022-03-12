@@ -5,24 +5,29 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     private static final String TAG = "main activity";
+    ArrayAdapter<CharSequence> adapter;
+    // map that holds all relevant data for calculation
+    private HashMap<String, String> calcMap = new HashMap<>();
+
     //first layout
     private EditText main_EDT_first_number;
     private EditText main_EDT_second_number;
-    private EditText main_EDT_func_opt;
     private MaterialButton main_BTN_calc;
+    private Spinner main_CBD_funcOpt;
 
     //second layout
     private TextView main_TXT_first_number;
@@ -31,10 +36,6 @@ public class MainActivity extends AppCompatActivity{
 
     //third layout
     private TextView main_TXT_result;
-
-    private HashMap<String, String> calcMap = new HashMap<>();
-    private ArrayList<String> validFuncInputs= new ArrayList<>(Arrays.asList("+", "x", "%", "-"));
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +47,10 @@ public class MainActivity extends AppCompatActivity{
 
     private void setClickListeners() {
         main_BTN_calc.setOnClickListener(e -> handleCalcBtn());
+        main_CBD_funcOpt.setOnItemSelectedListener(this);
     }
 
     private void handleCalcBtn() {
-        handleFuncInput();
         handleNumberInput(1);
         handleNumberInput(2);
         if(validate()){
@@ -118,38 +119,14 @@ public class MainActivity extends AppCompatActivity{
     private boolean validate() {
         String firstInput = main_EDT_first_number.getText().toString();
         String secondInput = main_EDT_second_number.getText().toString();
-        String funcInput = main_EDT_func_opt.getText().toString();
 
-        boolean inputFlag = !firstInput.isEmpty() &&
-                !secondInput.isEmpty() &&
-                !funcInput.isEmpty();
+        boolean inputFlag = !firstInput.isEmpty() && !secondInput.isEmpty();
 
         boolean hashMapFlag = calcMap.get("first") != null &&
                 calcMap.get("second") != null &&
                 calcMap.get("func") != null;
 
         return inputFlag && hashMapFlag;
-    }
-
-    private void handleFuncInput() {
-        try{
-            String funcInput = main_EDT_func_opt.getText().toString();
-            if(validFuncInputs.contains(funcInput)){
-                calcMap.put("func", funcInput);
-            }
-            else{
-                StringBuilder sb_msg = new StringBuilder("function must be one of ");
-                for(String value: validFuncInputs){
-                    sb_msg.append(value);
-                    sb_msg.append(", ");
-                }
-                sb_msg.append(" values");
-                toastMessage(sb_msg.toString());
-            }
-
-        }catch (Exception e){
-            Log.e(TAG ,"failed to parse string to int", e.getCause());
-        }
     }
 
     private void handleNumberInput(int index) {
@@ -173,12 +150,29 @@ public class MainActivity extends AppCompatActivity{
     private void setViews() {
         main_EDT_first_number = findViewById(R.id.main_EDT_first_number);
         main_EDT_second_number = findViewById(R.id.main_EDT_second_number);
-        main_EDT_func_opt = findViewById(R.id.main_EDT_func_opt);
         main_BTN_calc = findViewById(R.id.main_BTN_calc);
         main_TXT_first_number = findViewById(R.id.main_TXT_first_number);
         main_TXT_function = findViewById(R.id.main_TXT_function);
         main_TXT_second_number = findViewById(R.id.main_TXT_second_number);
         main_TXT_result = findViewById(R.id.main_TXT_result);
+        main_CBD_funcOpt = findViewById(R.id.main_CBD_funcOpt);
+        setSpinnerAdapter();
     }
 
+    private void setSpinnerAdapter() {
+        adapter = ArrayAdapter.createFromResource(this, R.array.funcOptions,
+                android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        main_CBD_funcOpt.setAdapter(adapter);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
+        calcMap.put("func", adapterView.getItemAtPosition(index).toString());
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        calcMap.put("func", adapterView.getItemAtPosition(0).toString());
+    }
 }
