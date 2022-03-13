@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private static final String TAG = "main activity";
     ArrayAdapter<CharSequence> adapter;
     // map that holds all relevant data for calculation
-    private HashMap<String, String> calcMap = new HashMap<>();
+    private final HashMap<String, String> calcMap = new HashMap<>();
 
     //first layout
     private EditText main_EDT_first_number;
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private String calcResult(String firstVal, String secondVal, String func) {
-        String result = "";
+        String result;
         double res = 0;
         try{
             int first = Integer.parseInt(firstVal);
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void handleNumberInput(int index) {
-        String numStr = "";
+        String numStr;
         switch (index){
             case 1:
                 numStr = main_EDT_first_number.getText().toString();
